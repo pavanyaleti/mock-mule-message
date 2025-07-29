@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:munit="http://www.mulesoft.org/schema/mule/munit" xmlns:munit-tools="http://www.mulesoft.org/schema/mule/munit-tools"
+	xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xsi:schemaLocation="
+		http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+		http://www.mulesoft.org/schema/mule/munit http://www.mulesoft.org/schema/mule/munit/current/mule-munit.xsd
+		http://www.mulesoft.org/schema/mule/munit-tools  http://www.mulesoft.org/schema/mule/munit-tools/current/mule-munit-tools.xsd">
+	<munit:config name="mock-mule-message-test-suite.xml" />
+	<munit:test name="mock-mule-message-test-suite-get:\listFiles:mock-mule-message-configTest" doc:id="a165f7ce-e2f5-40bf-bf33-e1b6058684e3" description="Test">
+		<munit:behavior>
+			<munit-tools:mock-when doc:name="file:list" doc:id="360b747a-3649-43a4-a376-b69e03c2d4b4" processor="file:list">
+				<munit-tools:with-attributes >
+					<munit-tools:with-attribute whereValue="84034e98-4e97-4394-b27c-57c40f0c2418" attributeName="doc:id" />
+				</munit-tools:with-attributes>
+				<munit-tools:then-return >
+					<munit-tools:payload value="#[[MunitTools::createMessage( readUrl('classpath://get-list-files-main/file-list-payload.dwl'),  &quot;text/plain&quot;, readUrl('classpath://get-list-files-main/file-list-attributes.dwl'), null)]]" mediaType="application/java" />
+				</munit-tools:then-return>
+			</munit-tools:mock-when>
+		</munit:behavior>
+		<munit:execution >
+			<flow-ref doc:name="get:\listFiles:mock-mule-message-config" doc:id="95a993a6-f4b9-47f8-aad6-801756424e8d" name="get:\listFiles:mock-mule-message-config"/>
+		</munit:execution>
+	</munit:test>
+
+
+</mule>

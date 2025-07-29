@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:file="http://www.mulesoft.org/schema/mule/file" xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd
+http://www.mulesoft.org/schema/mule/file http://www.mulesoft.org/schema/mule/file/current/mule-file.xsd">
+	<file:config name="File_Config" doc:name="File Config" doc:id="c909e922-c0b2-4d1d-8da2-41e54ad67643" />
+	<sub-flow name="get-list-files-main" doc:id="fc3a060c-7695-4585-bb62-6538a73bc28a" doc:description="Flow description goes here">
+		<logger level="INFO" doc:name="Start" doc:id="f80a5d9c-cd2e-4688-90be-f83cdc57abc2" message="Before list files operation"/>
+		<file:list doc:name="C:\Users" doc:id="84034e98-4e97-4394-b27c-57c40f0c2418" config-ref="File_Config" directoryPath="C:\Users"/>
+		<logger level="INFO" doc:name="Befor For Each" doc:id="15ab96d4-d739-4813-a26f-771ff611b6ce" message="Befor For Each"/>
+		<foreach doc:name="For Each Payload" doc:id="c02ef96e-226b-4dd5-aed2-20a62908c5de" collection="#[payload]">
+			<logger level="INFO" doc:name="attributes.name" doc:id="5b6d6cd8-8ba4-4547-ac40-9adce035655d" message="#[attributes.name]"/>
+		</foreach>
+		<logger level="INFO" doc:name="After For Each" doc:id="1b520987-d125-4a6d-95a7-f319cab747a2" message="After For Each"/>
+		<ee:transform doc:name="Payload" doc:id="2ea6540b-758d-4543-921a-6bba18c5ce13" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+payload]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<logger level="INFO" doc:name="End" doc:id="86163cf8-ea4f-4b5f-b727-391405dc09a6" message="After list files operation"/>
+	</sub-flow>
+</mule>
